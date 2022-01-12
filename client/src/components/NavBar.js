@@ -1,21 +1,21 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-const NavBar = ()=>{
-  return(
+import React from 'react'
 
-  <nav>
-  <div className="nav-wrapper white">
-    <Link to="/" className="brand-logo left">Logo</Link>
-    <ul id="nav-mobile" className="right">
-      <li><Link to="/login">Login</Link></li>
-      <li><Link to="/signup">Signup</Link></li>
-      <li><Link to="/profile">Profile</Link></li>
-    </ul>
-  </div>
-</nav>
-      
-  )
+import '../App.css'
+
+
+const NavBar = () =>{
+    return(
+        <nav>
+        <div className="nav-wrapper black">
+          <a href="/" className="brand-logo left">TRVL</a>
+          <ul id="nav-mobile" className="right">
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+            <li><a href="/profile">Profile</a></li>
+          </ul>
+        </div>
+      </nav>
+    )
 }
-
 
 export default NavBar

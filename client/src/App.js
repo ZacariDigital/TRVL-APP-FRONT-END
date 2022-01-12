@@ -1,35 +1,28 @@
 import React from 'react';
 import NavBar from './components/NavBar'
-import './App.css';
-import {BrowserRouter,Route} from 'react-router-dom'
-import Home from './components/screens/Home'
-import Login from './components/screens/Login'
-import Profile from './components/screens/Profile'
-import Signup from './components/screens/Signup'
+import './App.css'
+import {BrowserRouter, Routes, Route}  from 'react-router-dom'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import Profile from './components/Profile'
+import Home from './components/Home'
 
 
-
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-        <NavBar>
-          <Route path="/"><Home/></Route>
-          <Route path="/login"><Login/></Route>
-          <Route path="/signup"><Signup/></Route>
-          <Route path="/profile"><Profile/></Route>
+    <NavBar/>
+    <Routes>
+    <Route path="/" element={<Home/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/signup" element={<Signup/>}/>
+      <Route path="/profile" element={<Profile/>}/>
 
 
+      </Routes>
 
-        </NavBar>
-
-
-
-
-
+    
     </BrowserRouter>
-
-
-  );
+    );
 }
 
-export default App;
