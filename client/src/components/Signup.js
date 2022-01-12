@@ -1,7 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
 
 const Signup = ()=>{
+    const [name,setName] = useState("")
+    const [password,setPassword] = useState("")
+    const [email,setEmail] = useState("")
+
     return(
         <div className="mycard">
             <div className="authcard">
@@ -9,14 +13,20 @@ const Signup = ()=>{
                 <input 
                 type="text"
                 placeholder="name"
+                value={name}
+                onChange={(e)=>setName(e.target.value)}
                 />
                 <input 
                 type="text"
                 placeholder="email"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                 />
                 <input 
                 type="text"
                 placeholder="password"
+                onChange={(e)=>setPassword(e.target.value)}
+
                 />
                 <button className="btn waves-effect waves-heavy">
                     Sign Up
