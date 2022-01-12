@@ -11,3 +11,11 @@ a{
   text-align: center;
   background-color: rgba(0, 255, 208, 0.76);
 }
+
+
+
+.content-book{
+  text-align: center;
+  padding: 15px;
+  height: auto;
+}
