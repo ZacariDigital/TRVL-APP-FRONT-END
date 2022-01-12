@@ -5,6 +5,23 @@ const Signup = ()=>{
     const [name,setName] = useState("")
     const [password,setPassword] = useState("")
     const [email,setEmail] = useState("")
+    const PostData = ()=>{
+        fetch("http://localhost:5000/signup",{
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name:"",
+                password:"",
+                email:""
+            })
+
+        }).then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+        })
+    }
 
     return(
         <div className="mycard">
@@ -26,9 +43,10 @@ const Signup = ()=>{
                 type="text"
                 placeholder="password"
                 onChange={(e)=>setPassword(e.target.value)}
-
                 />
-                <button className="btn waves-effect waves-heavy">
+                <button className="btn waves-effect waves-heavy"
+                onClick={()=>PostData()}
+                >
                     Sign Up
                 </button>
                 <h5>
