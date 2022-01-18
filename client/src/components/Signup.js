@@ -6,7 +6,7 @@ const Signup = ()=>{
     const [password,setPassword] = useState("")
     const [email,setEmail] = useState("")
     const PostData = ()=>{
-        fetch("http://localhost:5000/signup",{
+        fetch("/signup",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
