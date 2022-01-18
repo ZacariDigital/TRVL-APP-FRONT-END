@@ -1,25 +1,41 @@
 import React,{useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import M from 'materialize-css'
 
 const Signup = ()=>{
+    const navigate = useNavigate()
     const [name,setName] = useState("")
-    const [password,setPassword] = useState("")
+    const [password,setPassword] = useState()
     const [email,setEmail] = useState("")
     const PostData = ()=>{
-        fetch("/signup",{
+        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            M.toast({html:"Invalid Email Format"})
+            return
+        }    
+        fetch("./signup",{
             method:"post",
             headers:{
-                "Content-Type":"application/json"
+                'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                name:"",
-                password:"",
-                email:""
+                name,
+                password,
+                email
             })
 
         }).then(res=>res.json())
         .then(data=>{
-            console.log(data)
+            if(data.error){
+                M.toast({html: data.error})
+            }
+            else{
+                M.toast({html: data.message,classes:"#43a047 green-darken 1"})
+                navigate('/login')
+
+
+            }
+        }).catch(err=>{
+            console.log(err)
         })
     }
 
@@ -42,6 +58,7 @@ const Signup = ()=>{
                 <input 
                 type="text"
                 placeholder="password"
+                value={password}
                 onChange={(e)=>setPassword(e.target.value)}
                 />
                 <button className="btn waves-effect waves-heavy"
