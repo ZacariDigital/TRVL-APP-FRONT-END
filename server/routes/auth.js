@@ -5,21 +5,15 @@ const User = mongoose.model("User")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../keys')
-const requireLogin = require ('../middleware/requireLogin')
+const requireLogin = require ("../middleware/requireLogin")
 
 
-
-
-
-router.get('/', (req, res)=>{
-    res.send("hello")
-})
 
 
 router.post('/signup', (req,res)=>{
     const {name,email,password} = req.body
     if(!email || !password || !name){
-        return res.status(420).json({error:"please add all the fields"})
+        return res.status(422).json({error:"please add all the fields"})
     }
     User.findOne({email:email})
     .then((savedUser)=>{
@@ -65,7 +59,8 @@ router.post('/signin',(req,res)=>{
             if(doMatch){
                 //res.json({message:"Successful Sign In"})
                 const token = jwt.sign({_id:savedUser._id},JWT_SECRET)
-                res.json({token})
+                const {_id,name,email} = savedUser
+                res.json({token,user:{_id,name,email}})
             }
             else{
                 return res.status(420).json({error:"Invalid Fields"})

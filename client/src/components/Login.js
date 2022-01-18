@@ -1,8 +1,44 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React,{useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import M from 'materialize-css'
 
 
 const Login = ()=>{
+    const navigate = useNavigate()
+    const [password,setPassword] = useState()
+    const [email,setEmail] = useState("")
+    const PostData = ()=>{
+        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+            M.toast({html:"Invalid Email Format"})
+            return
+        }    
+        fetch("./signin",{
+            method:"post",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+
+                password,
+                email
+            })
+
+        }).then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            if(data.error){
+                M.toast({html: data.error})
+            }
+            else{
+                M.toast({html:"Signed in Successfuly",classes:"#43a047 green-darken 1"})
+                navigate('/l')
+
+
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
     return(
         <div className="mycard">
             <div className="authcard">
@@ -10,16 +46,21 @@ const Login = ()=>{
                 <input 
                 type="text"
                 placeholder="email"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                 />
                 <input 
                 type="text"
                 placeholder="password"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 />
-                <button className="btn waves-effect waves-light">
+                <button className="btn waves-effect waves-light"
+                onClick={()=>PostData()}>
                     Login
                 </button>
                 <h5>
-                <Link to="/login">Dont have an account?</Link>
+                <Link to="/Signup">Dont have an account?</Link>
                 </h5>
             </div>
         </div>
