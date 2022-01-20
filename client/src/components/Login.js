@@ -31,7 +31,7 @@ const Login = ()=>{
             }
             else{
                 M.toast({html:"Signed in Successfuly",classes:"#43a047 green-darken 1"})
-                navigate('/l')
+                navigate('/')
 
 
             }
