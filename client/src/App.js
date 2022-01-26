@@ -2,6 +2,7 @@ import React,{useEffect, createContext, useReducer} from 'react';
 import NavBar from './components/NavBar'
 import './App.css'
 import {BrowserRouter, Routes, Route, useNavigate}  from 'react-router-dom'
+import { createBrowserHistory } from "history";
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
@@ -9,10 +10,19 @@ import Home from './components/Home'
 import Createpost from './components/Createpost'
 import {reducer, initialState} from './reducers/userReducer'
 
-const UserContext = createContext()
+export const UserContext = createContext()
 
 const Routing = () =>{
-  const navigate = useNavigate()
+  const history = createBrowserHistory()
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    console.log(typeof(user),user)
+    if(user){
+      history.push('/')
+    }else{
+      history.push('/login')
+    }
+  },[])
   return(
     <Routes>
     <Route path="/" element={<Home/>}/>
