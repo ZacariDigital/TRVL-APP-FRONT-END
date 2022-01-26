@@ -1,11 +1,51 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+import M from 'materialize-css'
+
+
 
 const CreatePost = ()=>{
+    const navigate = useNavigate()
     const [title,setTitle] = useState("")
     const [body,setBody] = useState()
     const [price,setPrice] = useState("")
     const [image,setImage] = useState("")
     const [url,setUrl] = useState("")
+    useEffect(()=>{
+        if(url){
+
+        
+        fetch("./createpost",{
+            method:"post",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':"Bearer "+localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+
+                title,
+                body,
+                price,
+                pic:url
+            })
+
+        }).then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            if(data.error){
+            }
+            else{
+                M.toast({html:"Post Created Successfully",classes:"#43a047 green-darken 1"})
+                navigate('/')
+
+
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
+    },[url])
 
 
     const postDetails = () =>{
@@ -24,25 +64,7 @@ const CreatePost = ()=>{
         .catch(err=>{
             console.log(err)
         })
-        fetch("./createpost",{
-            method:"post",
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
 
-                title,
-                body,
-                price,
-                pic:url
-            })
-
-        }).then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-        }).catch(err=>{
-            console.log(err)
-        })
     }
     
 
@@ -80,6 +102,7 @@ const CreatePost = ()=>{
             >
                     Submit
                 </button>
+
             </div>
 
 

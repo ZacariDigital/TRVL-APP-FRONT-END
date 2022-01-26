@@ -1,19 +1,19 @@
-import React from 'react';
+import React,{useEffect, createContext, useReducer} from 'react';
 import NavBar from './components/NavBar'
 import './App.css'
-import {BrowserRouter, Routes, Route}  from 'react-router-dom'
+import {BrowserRouter, Routes, Route, useNavigate}  from 'react-router-dom'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
 import Home from './components/Home'
 import Createpost from './components/Createpost'
+import {reducer, initialState} from './reducers/userReducer'
 
+const UserContext = createContext()
 
-
-export default function App() {
-  return (
-    <BrowserRouter>
-    <NavBar/>
+const Routing = () =>{
+  const navigate = useNavigate()
+  return(
     <Routes>
     <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
@@ -22,11 +22,22 @@ export default function App() {
       <Route path="/createpost" element={<Createpost/>}/>
 
 
-
       </Routes>
+
+  )
+}
+
+export default function App() {
+  const [state,dispatch] = useReducer(reducer,initialState)
+  return (
+    <UserContext.Provider value={{state,dispatch}}>
+    <BrowserRouter>
+    <NavBar/>
+    <Routing / >
 
     
     </BrowserRouter>
+    </UserContext.Provider>
     );
 }
 
